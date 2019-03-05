@@ -37,14 +37,14 @@ function calculate(possible,fav){
 
 var getMonthlyExpense = function (req, res) {
   let id = req.params.id;
-  var mm = today.getMonth() + 1; //January is 0!
-  var yyyy = today.getFullYear();
-  var startDate = yyyy + '-' + mm + '01';
-  var lastDay = lastDay(yyyy,mm)
-  var lastDate = yyyy + '-' + mm + lastDay;
+  // var mm = today.getMonth() + 1; //January is 0!
+  // var yyyy = today.getFullYear();
+  // var startDate = yyyy + '-' + mm + '01';
+  // var lastDay = lastDay(yyyy,mm)
+  // var lastDate = yyyy + '-' + mm + lastDay;
 
   const query = `select Sum(amount) as amount , category , 
-                (select sum(amount) from expense where date between ${startDate} and ${lastDate}) as total 
+                (select sum(amount) from expense where date between '2019-03-01' and '2019-03-30') as total 
                 from expense 
                 where date between '2019-03-01' and '2019-03-30' 
                 group by category`;
@@ -56,19 +56,48 @@ var getMonthlyExpense = function (req, res) {
     }
     var resultObject;
     var resultArray=[];
+    var messageArray=[];
+    var messageObject;
+    var totalAmount;
     result.forEach(function(data) {
       var percent = calculate(data.total,data.amount);
       console.log(percent);
+
       resultObject = {
-                          amount:data.amount,
-                          percent:percent, 
-                          category:data.category
+                          "text": `${data.category}:${data.amount} Ks(${percent})`
                       };
       resultArray.push(resultObject);
+      totalAmount = data.total;
     }, this);
+    resultArray.push({"text": `TotalAmount:${totalAmount} Ks`});
+    var chartString = GenerateImageChart();
+    messageObject = {
+        "messages": [
+            {
+              "attachment": {
+                "type": "image",
+                "payload": {
+                  "url": chartString
+                }
+              }
+            },
+            ...resultArray
+          ]
+    };
     
-    return res.status(200).send(resultArray);
+    return res.status(200).send(messageObject);
   });
+};
+
+function GenerateImageChart(){
+  var baseUrl="https://image-charts.com/chart";
+  var chartType = "?cht=p";
+  var chartSize = "&chs=400x300";
+  var chartData = "&chd=t:60,40";
+  var chartLable = "&chl=Hello|World";
+
+  var chartString = baseUrl+chartType+chartSize+chartData+chartLable;
+  return chartString;
 };
 
 var insertExpense = function (req, res) {
