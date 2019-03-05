@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var connection = require('../database/connection');
 
+function lastDay(y,m){
+  return  new Date(y, m +1, 0).getDate();
+}
+
 function currentDate(){
   var today = new Date();
   var dd = today.getDate();
@@ -33,9 +37,14 @@ function calculate(possible,fav){
 
 var getMonthlyExpense = function (req, res) {
   let id = req.params.id;
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  var startDate = yyyy + '-' + mm + '01';
+  var lastDay = lastDay(yyyy,mm)
+  var lastDate = yyyy + '-' + mm + lastDay;
 
   const query = `select Sum(amount) as amount , category , 
-                (select sum(amount) from expense where date between '2019-03-01' and '2019-03-30') as total 
+                (select sum(amount) from expense where date between ${startDate} and ${lastDate}) as total 
                 from expense 
                 where date between '2019-03-01' and '2019-03-30' 
                 group by category`;
@@ -54,7 +63,6 @@ var getMonthlyExpense = function (req, res) {
                           amount:data.amount,
                           percent:percent, 
                           category:data.category
-
                       };
       resultArray.push(resultObject);
     }, this);
@@ -62,8 +70,6 @@ var getMonthlyExpense = function (req, res) {
     return res.status(200).send(resultArray);
   });
 };
-
-
 
 var insertExpense = function (req, res) {
   const { expense_amount, category } = req.body;
