@@ -92,7 +92,8 @@ var getExpense = function (req, res) {
       return res.status(400).send(err);
     }
     
-    return res.status(200).send(result);
+    //return res.status(200).send(result);
+    res.render('expense', {result: result})
 
   });
 };

@@ -1,5 +1,19 @@
 html
   head
+    link(rel='stylesheet', href='/css/table.css')
     title= title
   body
-    h1= message
+      
+    table
+        tr
+            th Items
+            th Category
+            th Amount
+            th Date 
+        each res in result       
+            tr
+                td= res.item
+                td= res.category
+                td= res.amount
+                td= res.date
+
