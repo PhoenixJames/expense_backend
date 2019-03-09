@@ -14,7 +14,7 @@ app.use(cors({origin: 'http://localhost:8080'}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/api/assignment', assignmentRouter);
-app.use('/api/expense', expenseRouter);
+app.use('/api', expenseRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
