@@ -99,7 +99,11 @@ var getExpense = function (req, res) {
 };
 
 var insertExpense = function (req, res) {
-  const { amount, category , item} = req.body;
+  // const { amount, category , item} = req.body;
+  const amount = req.body.number;
+  const category = req.body["expense-item"];
+  const item = req.body["expense-item-original"];
+
   var user_id = req.params.mid;
   var date=currentDate();
   console.log(date);
