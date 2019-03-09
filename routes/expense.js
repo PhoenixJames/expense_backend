@@ -93,7 +93,7 @@ var getExpense = function (req, res) {
     }
     
     //return res.status(200).send(result);
-    res.render('expense', {result: result})
+    res.render('expense', {result: result,time:rangeStr})
 
   });
 };

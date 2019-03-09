@@ -1,19 +1,34 @@
 html
   head
-    link(rel='stylesheet', href='/css/table.css')
+    //- link(rel='stylesheet' href='' type='text/css' )
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
     title= title
   body
-      
-    table
-        tr
+    h3 Your Expense For #{time}
+    div(class='col-md-12')
+      input(class='pull-right' type='text' name='txtSearch')
+      table.table.table-hover
+        thead
+          tr
             th Items
             th Category
             th Amount
-            th Date 
-        each res in result       
+            th Date
+            th User Name
+        tbody
+          each res in result
             tr
                 td= res.item
                 td= res.category
                 td= res.amount
                 td= res.date
+                td
+
+
+
+
 
