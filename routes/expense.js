@@ -78,7 +78,6 @@ var getExpense = function (req, res) {
 
 
   var range = getDateRange(rangeStr);
-  console.log(range);
   var startDate = range.startDate;
   var endDate = range.endDate;
 
@@ -103,12 +102,13 @@ var insertExpense = function (req, res) {
   const amount = req.body.number;
   const category = req.body["expense-item"];
   const item = req.body["expense-item-original"];
+  const username = req.body["First Name"];
 
   var user_id = req.params.mid;
   var date=currentDate();
   console.log(date);
-  const query = `INSERT INTO expense (amount,category,user,date,item)
-                 VALUES (${amount},'${category}',${user_id},'${date}','${item}')`;
+  const query = `INSERT INTO expense (amount,category,user,date,item,username)
+                 VALUES (${amount},'${category}',${user_id},'${date}','${item}','${username}')`;
   
   connection.query(query, function (err, result) {
     if (err) {
