@@ -10,10 +10,17 @@ html
 
     title= title
   body
-    h3 Hello, #{result[0].username} Your Expense For #{time}
+    div.container
+      h3 Hello, #{result[0].username}, welcome back!
+      input(
+        class='pull-right'
+        id='txtSearch'
+        type='text' 
+        name='txtSearch'
+        placeholder="Filter").form-control
     div(class='col-md-12')
-      input(class='pull-right' id='txtSearch' type='text' name='txtSearch')
-      table.table.table-hover#tblSearch
+      h4 Your expenses for this #{time}
+      table.table.table-hover#tblSearch.table-striped
         thead
           tr
             th Items
