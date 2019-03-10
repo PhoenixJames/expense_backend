@@ -10,6 +10,8 @@ html
 
     title= title
   body
+    nav.navbar.navbar-inverse.container-fluid.navbar-header(style="background-color:#f2f7f3;width:100%;")
+      img(src='https://i.imgur.com/07gIvBd.png' alt='Seriyes' height='40' width='80' style="padding:5px;")
     div.container
       h3 Hello, #{result[0].username}, welcome back!
       input(
@@ -20,7 +22,7 @@ html
         placeholder="Filter").form-control
     div(class='col-md-12')
       h4 Your expenses for this #{time}
-      table.table.table-hover#tblSearch.table-striped
+      table.table.table-hover#tblSearch.table-striped(style="background-color:#79f2b3;")
         thead
           tr
             th Items
