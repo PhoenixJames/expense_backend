@@ -102,7 +102,7 @@ var insertExpense = function (req, res) {
   const amount = req.body.number;
   const category = req.body["expense-item"];
   const item = req.body["expense-item-original"];
-  const username = req.body["First Name"];
+  const username = req.body["first name"];
 
   var user_id = req.params.mid;
   var date=currentDate();
